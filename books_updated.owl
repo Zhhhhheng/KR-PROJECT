@@ -1,0 +1,677 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://example.org/books.owl"
+         xmlns="http://example.org/books.owl#">
+
+<owl:Ontology rdf:about="http://example.org/books.owl"/>
+
+<owl:ObjectProperty rdf:about="#hasAuthor">
+  <rdfs:domain rdf:resource="#Book"/>
+  <rdfs:range rdf:resource="#Person"/>
+  <owl:inverseOf rdf:resource="#isAuthorOf"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#isAuthorOf">
+  <owl:inverseOf rdf:resource="#hasAuthor"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasIllustrator">
+  <rdfs:domain rdf:resource="#Book"/>
+  <rdfs:range rdf:resource="#Person"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasTargetAudience">
+  <rdfs:range rdf:resource="#Audience"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#containsContent">
+  <rdfs:range rdf:resource="#Content"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#partOfSeries">
+  <rdfs:range rdf:resource="#Series"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#translationOf">
+  <rdfs:range rdf:resource="#Book"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#inLanguage">
+  <rdfs:range rdf:resource="#Language"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#received">
+  <rdfs:range rdf:resource="#AwardWin"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#ofAward">
+  <rdfs:range rdf:resource="#LiteraryAward"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasPublisher">
+  <rdfs:range rdf:resource="#Publisher"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasISBN">
+  <rdfs:range rdf:resource="#ISBN"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasCopy">
+  <rdfs:domain rdf:resource="#Book"/>
+  <rdfs:range rdf:resource="#LibraryCopy"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#heldBy">
+  <rdfs:domain rdf:resource="#LibraryCopy"/>
+  <rdfs:range rdf:resource="#Library"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#loanFor">
+  <rdfs:domain rdf:resource="#Loan"/>
+  <rdfs:range rdf:resource="#LibraryCopy"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasSequel">
+  <rdfs:domain rdf:resource="#Book"/>
+  <rdfs:range rdf:resource="#Book"/>
+  <owl:inverseOf rdf:resource="#hasPreviousBook"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasPreviousBook">
+  <rdfs:domain rdf:resource="#Book"/>
+  <rdfs:range rdf:resource="#Book"/>
+  <owl:inverseOf rdf:resource="#hasSequel"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#adaptationOf">
+  <rdfs:range rdf:resource="#LiteraryWork"/>
+</owl:ObjectProperty>
+
+<owl:Class rdf:about="#Book">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Fiction"/>
+        <rdf:Description rdf:about="#NonFiction"/>
+      </owl:unionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Person">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:disjointWith rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Series">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:disjointWith rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Audience">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:disjointWith rdf:resource="#Person"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Children">
+  <rdfs:subClassOf rdf:resource="#Audience"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Content">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:disjointWith rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#MatureContent">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Friendship">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+  <owl:disjointWith rdf:resource="#MatureContent"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Language">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:disjointWith rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LiteraryAward">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:disjointWith rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AwardWin">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#ofAward"/>
+      <owl:someValuesFrom rdf:resource="#LiteraryAward"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Fiction">
+  <rdfs:subClassOf rdf:resource="#Book"/>
+  <owl:disjointWith rdf:resource="#NonFiction"/>
+</owl:Class>
+
+<owl:Class rdf:about="#NonFiction">
+  <rdfs:subClassOf rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Fantasy">
+  <rdfs:subClassOf rdf:resource="#Fiction"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Organization">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Publisher">
+  <rdfs:subClassOf rdf:resource="#Organization"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ISBN">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Hardcover">
+  <rdfs:subClassOf rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Paperback">
+  <rdfs:subClassOf rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EBook">
+  <rdfs:subClassOf rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Audiobook">
+  <rdfs:subClassOf rdf:resource="#Book"/>
+</owl:Class>
+
+<owl:Class rdf:about="#YoungAdult">
+  <rdfs:subClassOf rdf:resource="#Audience"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EducationalContent">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LiteraryWork">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Adaptation">
+  <rdfs:subClassOf rdf:resource="#LiteraryWork"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Library">
+  <rdfs:subClassOf rdf:resource="#Organization"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LibraryCopy">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:subClassOf>
+    <owl:Class>
+      <owl:complementOf rdf:resource="#Book"/>
+    </owl:Class>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Loan">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Author">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Person"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#isAuthorOf"/>
+          <owl:someValuesFrom rdf:resource="#Book"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#TranslatedBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#translationOf"/>
+          <owl:someValuesFrom rdf:resource="#Book"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#SeriesBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#partOfSeries"/>
+          <owl:someValuesFrom rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#IllustratedBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasIllustrator"/>
+          <owl:someValuesFrom rdf:resource="#Person"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#PictureBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#IllustratedBook"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasTargetAudience"/>
+          <owl:someValuesFrom rdf:resource="#Children"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#ChildrensFantasyBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Fantasy"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasTargetAudience"/>
+          <owl:someValuesFrom rdf:resource="#Children"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#ChildFriendlyBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#containsContent"/>
+          <owl:allValuesFrom>
+            <owl:Class>
+              <owl:complementOf rdf:resource="#MatureContent"/>
+            </owl:Class>
+          </owl:allValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#PrizeWinningBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#received"/>
+          <owl:someValuesFrom>
+            <owl:Class>
+              <owl:intersectionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#AwardWin"/>
+                <owl:Restriction>
+                  <owl:onProperty rdf:resource="#ofAward"/>
+                  <owl:someValuesFrom rdf:resource="#LiteraryAward"/>
+                </owl:Restriction>
+              </owl:intersectionOf>
+            </owl:Class>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#AwardWinningAuthor">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Author"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#isAuthorOf"/>
+          <owl:someValuesFrom rdf:resource="#PrizeWinningBook"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#DutchBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#inLanguage"/>
+          <owl:hasValue rdf:resource="#dutch"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#PublishedBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasPublisher"/>
+          <owl:someValuesFrom rdf:resource="#Publisher"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#EducationalBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#containsContent"/>
+          <owl:someValuesFrom rdf:resource="#EducationalContent"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#YoungAdultBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasTargetAudience"/>
+          <owl:someValuesFrom rdf:resource="#YoungAdult"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#IllustratedEducationalBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#EducationalBook"/>
+        <rdf:Description rdf:about="#IllustratedBook"/>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#ChildrensEducationalBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#EducationalBook"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasTargetAudience"/>
+          <owl:someValuesFrom rdf:resource="#Children"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#SequelBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasPreviousBook"/>
+          <owl:someValuesFrom rdf:resource="#Book"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#BookWithSequel">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasSequel"/>
+          <owl:someValuesFrom rdf:resource="#Book"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#AdaptedBook">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Book"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#adaptationOf"/>
+          <owl:someValuesFrom rdf:resource="#LiteraryWork"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#dutch">
+  <rdf:type rdf:resource="#Language"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#harryPotter">
+  <rdf:type rdf:resource="#Series"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#hugoAward">
+  <rdf:type rdf:resource="#LiteraryAward"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#jkRowling">
+  <rdf:type rdf:resource="#Person"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#dickBruna">
+  <rdf:type rdf:resource="#Person"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#theHobbit">
+  <rdf:type rdf:resource="#Fantasy"/>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasTargetAudience"/>
+      <owl:someValuesFrom rdf:resource="#Children"/>
+    </owl:Restriction>
+  </rdf:type>
+  <hasCopy rdf:resource="#hobbitCopy1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#deHobbit">
+  <rdf:type rdf:resource="#Book"/>
+  <translationOf rdf:resource="#theHobbit"/>
+  <inLanguage rdf:resource="#dutch"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#w1">
+  <rdf:type rdf:resource="#AwardWin"/>
+  <ofAward rdf:resource="#hugoAward"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#hpGobletOfFire">
+  <rdf:type rdf:resource="#Fantasy"/>
+  <hasAuthor rdf:resource="#jkRowling"/>
+  <partOfSeries rdf:resource="#harryPotter"/>
+  <received rdf:resource="#w1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#nijntje">
+  <rdf:type rdf:resource="#Book"/>
+  <hasAuthor rdf:resource="#dickBruna"/>
+  <hasIllustrator rdf:resource="#dickBruna"/>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasTargetAudience"/>
+      <owl:someValuesFrom rdf:resource="#Children"/>
+    </owl:Restriction>
+  </rdf:type>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#containsContent"/>
+      <owl:someValuesFrom rdf:resource="#Friendship"/>
+    </owl:Restriction>
+  </rdf:type>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#containsContent"/>
+      <owl:allValuesFrom rdf:resource="#Friendship"/>
+    </owl:Restriction>
+  </rdf:type>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#penguinRandomHouse">
+  <rdf:type rdf:resource="#Publisher"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#isbn9780451524935">
+  <rdf:type rdf:resource="#ISBN"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#nineteenEightyFour">
+  <rdf:type rdf:resource="#Fiction"/>
+  <hasISBN rdf:resource="#isbn9780451524935"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#theHobbitHardcover">
+  <rdf:type rdf:resource="#Hardcover"/>
+  <hasPublisher rdf:resource="#penguinRandomHouse"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#theHobbitPaperback">
+  <rdf:type rdf:resource="#Paperback"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#theHobbitEbook">
+  <rdf:type rdf:resource="#EBook"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#theHobbitAudio">
+  <rdf:type rdf:resource="#Audiobook"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#centralLibrary">
+  <rdf:type rdf:resource="#Library"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#hobbitCopy1">
+  <rdf:type rdf:resource="#LibraryCopy"/>
+  <heldBy rdf:resource="#centralLibrary"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#loan1">
+  <rdf:type rdf:resource="#Loan"/>
+  <loanFor rdf:resource="#hobbitCopy1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#youngAdultAudience">
+  <rdf:type rdf:resource="#YoungAdult"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#mathContent">
+  <rdf:type rdf:resource="#EducationalContent"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#mathBook">
+  <rdf:type rdf:resource="#NonFiction"/>
+  <containsContent rdf:resource="#mathContent"/>
+  <hasIllustrator rdf:resource="#dickBruna"/>
+  <hasTargetAudience rdf:resource="#childrenAudience"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#childrenAudience">
+  <rdf:type rdf:resource="#Children"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#bookYA">
+  <rdf:type rdf:resource="#Fiction"/>
+  <hasTargetAudience rdf:resource="#youngAdultAudience"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#hobbitWork">
+  <rdf:type rdf:resource="#LiteraryWork"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#hobbitAdaptation">
+  <rdf:type rdf:resource="#Adaptation"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#bookAdaptation">
+  <rdf:type rdf:resource="#Fiction"/>
+  <adaptationOf rdf:resource="#hobbitWork"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#bookA">
+  <rdf:type rdf:resource="#Fiction"/>
+  <hasSequel rdf:resource="#bookB"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#bookB">
+  <rdf:type rdf:resource="#Fiction"/>
+</owl:NamedIndividual>
+
+
+</rdf:RDF>
